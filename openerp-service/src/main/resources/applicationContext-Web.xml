@@ -7,14 +7,14 @@
                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <util:properties id="tallyWebServiceProperties" location="classpath:/openerpWebService.properties"/>
-    <util:properties id="httpClientDefaultProperties">
-        <prop key="communication.type">asynchronous</prop>
-    </util:properties>
+    <context:property-placeholder location="classpath:openerpWebService.properties"/>
+
+    <util:properties id="openerpProperties"
+                     location="classpath:/openerpWebService.properties" />
 
     <context:spring-configured/>
     <context:annotation-config/>
-    <context:component-scan base-package="org.jss"/>
+    <context:component-scan base-package="org.jss.openerp"/>
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>

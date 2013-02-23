@@ -1,14 +1,11 @@
 package org.jss.openerp.web.controller.it;
 
 import org.joda.time.DateTime;
-import org.jss.mocks.MockHttpClient;
-import org.jss.openerp.web.controller.OpenerpController;
-import org.jss.test.utils.ApplicationContextProvider;
+import org.jss.openerp.web.controller.OpenERPController;
 import org.jss.test.utils.MVCTestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -20,7 +17,7 @@ import static org.springframework.test.web.server.result.MockMvcResultMatchers.s
 public class OpenerpControllerIntegrationTest {
 
     @Autowired
-    OpenerpController controller;
+    OpenERPController controller;
 
     @Test
     public void shouldReturnOkForATypicalRequest() throws Exception {
@@ -72,11 +69,6 @@ public class OpenerpControllerIntegrationTest {
 //                );
 //    }
 
-
-    private MockHttpClient contextHttpClient() {
-        ApplicationContext applicationContext = ApplicationContextProvider.getApplicationContext();
-        return (MockHttpClient) applicationContext.getBean("httpClient");
-    }
 
 
     private class DefaultPatient {

@@ -2,7 +2,7 @@ package org.jss.openerp.web.controller;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.jss.openerp.web.service.OpenerpService;
+import org.jss.openerp.web.service.OpenERPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,31 +14,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
-
 @Controller
-@RequestMapping("/openerp/**")
-public class OpenerpController {
+@RequestMapping("/**")
+public class OpenERPController {
 
-    OpenerpService openerpService;
+    OpenERPService openerpService;
 
     private static Logger logger =Logger.getLogger("OpenerpController") ;
 
     @Autowired
-    public OpenerpController(OpenerpService ledgerService){
-       this.openerpService = ledgerService;
+    public OpenERPController(OpenERPService openerpService){
+       this.openerpService = openerpService;
     }
 
     @RequestMapping(value = "/customer/create", method = RequestMethod.POST,headers="Accept=application/json")
-    public @ResponseBody ResponseEntity<String> createCustomer(@RequestParam String patientName, @RequestParam String patientId, @RequestParam(required = false) String company) throws IOException {
+    public @ResponseBody ResponseEntity<String> createCustomer(@RequestParam String patientName, @RequestParam String patientId) throws Exception {
+        logger.info("New Request "+"patient name :"+patientName+" patient id : "+patientId);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         if(StringUtils.isBlank(patientName) || StringUtils.isBlank(patientId)) {
             return new ResponseEntity<String>("Either patientName or patientId is blank",responseHeaders,HttpStatus.INTERNAL_SERVER_ERROR)  ;
         }
-
-        openerpService.createCustomer(patientName, patientId);
+        try {
+            openerpService.createCustomer(patientName, patientId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        logger.info("Patient "+"patient name :"+patientName+" patient id : "+patientId +"created");
 
         return new ResponseEntity<String>(responseHeaders,HttpStatus.OK)  ;
     }

@@ -7,16 +7,10 @@
                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+    <context:property-placeholder location="classpath:openerpWebService.properties"/>
 
     <context:spring-configured/>
     <context:annotation-config/>
-    <bean name="httpClient" class="org.jss.mocks.MockHttpClient">
-    </bean>
 
-    <bean id="jsonConverter"
-          class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-        <property name="supportedMediaTypes" value="application/json" />
-    </bean>
-    <bean id="applicationContextProvider" class="org.jss.test.utils.ApplicationContextProvider"></bean>
 
 </beans>
