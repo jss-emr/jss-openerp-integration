@@ -4,12 +4,20 @@ package org.jss.openerp.web.service;
 import org.apache.log4j.Logger;
 import org.jss.openerp.web.client.OpenERPClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Vector;
 
 @Service
 public class OpenERPService {
+    public @Value("${host}") String host;
+    public @Value("${port}") int port;
+    public @Value("${database}") String database;
+    public @Value("${user}") String user;
+    public @Value("${password}") String password;
+
+
     OpenERPClient openERPClient;
     private static Logger logger =Logger.getLogger("OpenERPService") ;
 
@@ -19,18 +27,18 @@ public class OpenERPService {
     }
 
     public void createCustomer(String name, String patientId) throws Exception {
-        if(noCustomersFound((Object[]) findCustomerWithPatientReference(patientId))){
+        if(noCustomersFound(findCustomerWithPatientReference(patientId))){
             openERPClient.create("res.partner",paramsForCreation(name, patientId));
-        }else
+        } else
             raiseDuplicateException(patientId);
     }
 
 
-    private Object findCustomerWithPatientReference(String patientId) throws Exception {
+    private Object[] findCustomerWithPatientReference(String patientId) throws Exception {
         Object args[]={"ref","=",patientId};
         Vector params = new Vector();
         params.addElement(args);
-        return openERPClient.search("res.partner", params);
+        return (Object[])openERPClient.search("res.partner", params);
     }
 
     public void deleteCustomerWithPatientReference(String patientId) throws Exception {

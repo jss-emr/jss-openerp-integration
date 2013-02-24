@@ -9,9 +9,6 @@
 
     <context:property-placeholder location="classpath:openerpWebService.properties"/>
 
-    <util:properties id="openerpProperties"
-                     location="classpath:/openerpWebService.properties" />
-
     <context:spring-configured/>
     <context:annotation-config/>
     <context:component-scan base-package="org.jss.openerp"/>
