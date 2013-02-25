@@ -32,16 +32,14 @@ public class OpenERPClient {
     }
 
 
-    private void login() throws Exception {
-        if(id != null)
-            return ;
+    private Object login() throws Exception {
         XmlRpcClient loginRpcClient = createRPCClient(host, port, "/xmlrpc/common");
         Vector params = new Vector();
         params.addElement(database);
         params.addElement(user);
         params.addElement(password);
 
-        id = loginRpcClient.execute("login", params);
+        return loginRpcClient.execute("login", params);
     }
 
     public Object search(String resource, Vector params) throws Exception {
@@ -57,7 +55,9 @@ public class OpenERPClient {
     }
 
     public Object execute(String resource, String operation, Vector params) throws Exception {
-        Object args[]={database,new Integer(1),password,resource,operation,params};
+        if(id == null)
+            id = login();
+        Object args[]={database,id,password,resource,operation,params};
 
         return xmlRpcClient().execute("execute", args);
     }
