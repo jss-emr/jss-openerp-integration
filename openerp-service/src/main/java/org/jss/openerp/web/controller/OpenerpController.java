@@ -27,7 +27,7 @@ public class OpenERPController {
        this.openerpService = openerpService;
     }
 
-    @RequestMapping(value = "/customer/create", method = RequestMethod.POST,headers="Accept=application/json")
+    @RequestMapping(value = "/customer", method = RequestMethod.POST,headers="Accept=application/json")
     public @ResponseBody ResponseEntity<String> createCustomer(@RequestParam String patientName, @RequestParam String patientId) throws Exception {
         logger.info("New Request "+"patient name :"+patientName+" patient id : "+patientId);
         HttpHeaders responseHeaders = new HttpHeaders();

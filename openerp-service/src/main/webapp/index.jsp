@@ -1,5 +1,10 @@
 <html>
 <body>
-<h2>Hello World!</h2>
+<form method="post" action="/customer/create" >
+    <input type="text" name="patientName">name</input><br>
+
+    <input type="text" name="patientId">PatientId</input> <br>
+    <input type="submit"/>
+</form>
 </body>
 </html>

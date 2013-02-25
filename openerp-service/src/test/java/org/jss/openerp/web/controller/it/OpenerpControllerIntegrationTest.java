@@ -23,7 +23,7 @@ public class OpenerpControllerIntegrationTest {
     public void shouldReturnOkForATypicalRequest() throws Exception {
         DefaultPatient patient = new DefaultPatient();
         MVCTestUtils.mockMvc(controller)
-                .perform(post("/customer/create")
+                .perform(post("/customer")
                         .param("patientName", patient.patientName)
                         .param("patientId", patient.patientId)
                 )
