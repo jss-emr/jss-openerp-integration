@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/**")
-public class OpenERPController {
+@RequestMapping("/customer")
+public class CustomerController {
 
     OpenERPService openerpService;
 
     private static Logger logger =Logger.getLogger("OpenerpController") ;
 
     @Autowired
-    public OpenERPController(OpenERPService openerpService){
+    public CustomerController(OpenERPService openerpService){
        this.openerpService = openerpService;
     }
 
-    @RequestMapping(value = "/customer", method = RequestMethod.POST,headers="Accept=application/json")
+    @RequestMapping( method = RequestMethod.POST,headers="Accept=application/json")
     public @ResponseBody ResponseEntity<String> createCustomer(@RequestParam String patientName, @RequestParam String patientId) throws Exception {
         logger.info("New Request "+"patient name :"+patientName+" patient id : "+patientId);
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -47,6 +47,8 @@ public class OpenERPController {
         return new ResponseEntity<String>(responseHeaders,HttpStatus.OK)  ;
     }
 
-  }
+
+
+}
 
 

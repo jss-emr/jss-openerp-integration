@@ -1,7 +1,7 @@
 package org.jss.openerp.web.controller.it;
 
 import org.joda.time.DateTime;
-import org.jss.openerp.web.controller.OpenERPController;
+import org.jss.openerp.web.controller.CustomerController;
 import org.jss.test.utils.MVCTestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,13 +14,13 @@ import static org.springframework.test.web.server.result.MockMvcResultMatchers.s
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:applicationContext-Web.xml", "classpath*:applicationContext-Test.xml"})
-public class OpenerpControllerIntegrationTest {
+public class CustomerControllerIntegrationTest {
 
     @Autowired
-    OpenERPController controller;
+    CustomerController controller;
 
     @Test
-    public void shouldReturnOkForATypicalRequest() throws Exception {
+    public void shouldReturnOkForACreateRequest() throws Exception {
         DefaultPatient patient = new DefaultPatient();
         MVCTestUtils.mockMvc(controller)
                 .perform(post("/customer")
@@ -28,11 +28,16 @@ public class OpenerpControllerIntegrationTest {
                         .param("patientId", patient.patientId)
                 )
                 .andExpect(status().isOk());
+//        MVCTestUtils.mockMvc(controller)
+//                .perform(delete("/customer/{patientId}")
+//                        .param("patientId", patient.patientId)
+//                )
+//                .andExpect(status().isOk());
     }
 
     private class DefaultPatient {
-        public  String patientName = "RamSingh" + DateTime.now().getMillis();
-        public String patientId = "123455";
+        public  String patientName = "BhimSingh" + DateTime.now().getMillis();
+        public String patientId = "124155"+ DateTime.now().getMillis();
         public String company = "JSS";
     }
 }
