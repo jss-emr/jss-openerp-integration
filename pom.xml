@@ -34,6 +34,24 @@
             <name>Apache Maven Release Repository</name>
             <url>https://repository.apache.org/content/repositories/releases</url>
         </repository>
+        <repository>
+            <id>JBoss</id>
+            <name>The "public-jboss" repository group provides a combined view all JBoss community project artifacts</name>
+            <layout>default</layout>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
+        </repository>
+        <repository>
+            <id>spring-repo</id>
+            <name>Spring Maven Repository</name>
+            <url>http://maven.springframework.org/milestone</url>
+            <releases>
+                <updatePolicy>daily</updatePolicy>
+            </releases>
+            <snapshots>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+
 
     </repositories>
     <pluginRepositories>
