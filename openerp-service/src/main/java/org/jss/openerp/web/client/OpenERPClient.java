@@ -2,6 +2,9 @@ package org.jss.openerp.web.client;
 
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+import org.jss.openerp.web.http.client.HttpClient;
+import org.jss.openerp.web.request.builder.RequestBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +23,13 @@ public class OpenERPClient {
 
     Object id ;
     XmlRpcClient xmlRpcClient ;
+    RequestBuilder requestBuilder;
+    HttpClient httpClient;
 
-    public OpenERPClient() throws Exception {
+    @Autowired
+    public OpenERPClient(RequestBuilder requestBuilder,HttpClient httpClient) throws Exception {
+        this.requestBuilder = requestBuilder;
+        this.httpClient = httpClient;
     }
     public OpenERPClient(String host, int port, String database, String user, String password) throws Exception {
         this.host = host;
@@ -30,7 +38,6 @@ public class OpenERPClient {
         this.user = user;
         this.password = password;
     }
-
 
     private Object login() throws Exception {
         XmlRpcClient loginRpcClient = createRPCClient(host, port, "/xmlrpc/common");
@@ -46,8 +53,11 @@ public class OpenERPClient {
         return execute(resource,"search",params) ;
     }
 
-    public Object create(String resource, Vector params) throws Exception {
-        return execute(resource,"create",params) ;
+    public Object create(String resource, String name,String patientId) throws Exception {
+        if(id == null)
+            id = login();
+        String request = requestBuilder.buildNewCustomerRequest(name, patientId, id, database, password, resource, "create");
+        return httpClient.post("http://"+host+":"+ port+ "/xmlrpc/object",request);
     }
 
     public Object delete(String resource, Vector params) throws Exception {
@@ -57,7 +67,7 @@ public class OpenERPClient {
     public Object execute(String resource, String operation, Vector params) throws Exception {
         if(id == null)
             id = login();
-        Object args[]={database,id,password,resource,operation,params};
+        Object args[]={database,(Integer)id,password,resource,operation,params};
 
         return xmlRpcClient().execute("execute", args);
     }
@@ -79,6 +89,5 @@ public class OpenERPClient {
 
         return rpcClient;
     }
-
 
 }

@@ -11,6 +11,19 @@
 
     <context:spring-configured/>
     <context:annotation-config/>
+    <context:component-scan base-package="org.jss.openerp"/>
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <value>
+                resource.loader=class
+                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+            </value>
+        </property>
+    </bean>
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+    </bean>
 
 
 </beans>

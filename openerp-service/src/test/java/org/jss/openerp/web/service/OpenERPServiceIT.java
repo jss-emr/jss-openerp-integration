@@ -1,9 +1,9 @@
 package org.jss.openerp.web.service;
 
 import junit.framework.TestCase;
-import org.jss.openerp.web.client.OpenERPClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -12,9 +12,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = {"classpath*:applicationContext-Test.xml"})
 public class OpenERPServiceIT extends TestCase {
 
+    @Autowired
     OpenERPService openerpService;
 
-    OpenERPClient openERPClient;
     public @Value("${host}") String host;
     public @Value("${port}") int port;
     public @Value("${database}") String database;
@@ -23,13 +23,6 @@ public class OpenERPServiceIT extends TestCase {
 
 
     public void setUp() {
-        try {
-            openERPClient = new OpenERPClient(host,port,database,user,password);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        openerpService = new OpenERPService(openERPClient);
-
     }
 
     public void tearDown()  {
@@ -44,6 +37,5 @@ public class OpenERPServiceIT extends TestCase {
         String patientId ="12345";
         openerpService.createCustomer(name,patientId);
         openerpService.deleteCustomerWithPatientReference(patientId);
-
     }
 }

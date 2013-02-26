@@ -28,7 +28,7 @@ public class OpenERPService {
 
     public void createCustomer(String name, String patientId) throws Exception {
         if(noCustomersFound(findCustomerWithPatientReference(patientId))){
-            openERPClient.create("res.partner",paramsForCreation(name, patientId));
+            openERPClient.create("res.partner",name, patientId);
         } else
             raiseDuplicateException(patientId);
     }
@@ -55,6 +55,7 @@ public class OpenERPService {
 
         Object args2[]={"name",name};
         params.addElement(args2);
+
         return params;
     }
 

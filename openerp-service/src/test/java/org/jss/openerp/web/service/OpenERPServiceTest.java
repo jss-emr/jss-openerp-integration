@@ -6,9 +6,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import java.util.Vector;
+
 import static org.junit.Assert.assertEquals;
-
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -40,7 +39,7 @@ public class OpenERPServiceTest {
         OpenERPService openERPService = new OpenERPService(openERPClient);
         openERPService.createCustomer(name,patientId);
 
-        verify(openERPClient).create((String) any(), (Vector) any());
+       verify(openERPClient).create((String) any(),(String) any(), (String) any());
     }
 
     @Test
