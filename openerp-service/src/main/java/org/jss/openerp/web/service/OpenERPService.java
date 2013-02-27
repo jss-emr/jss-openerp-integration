@@ -48,17 +48,6 @@ public class OpenERPService {
         openERPClient.delete("res.partner", params);
     }
 
-    Vector paramsForCreation(String name, String customerId) {
-        Vector params = new Vector();
-        Object args1[]={"ref",customerId};
-        params.addElement(args1);
-
-        Object args2[]={"name",name};
-        params.addElement(args2);
-
-        return params;
-    }
-
     private boolean noCustomersFound(Object[] customers) {
         return customers.length == 0;
     }
