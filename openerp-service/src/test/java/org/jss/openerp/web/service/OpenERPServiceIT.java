@@ -34,7 +34,7 @@ public class OpenERPServiceIT extends TestCase {
         setUp();
 
         String name= "Raman Singh";
-        String patientId ="12345";
+        String patientId ="12245";
         openerpService.createCustomer(name,patientId);
         openerpService.deleteCustomerWithPatientReference(patientId);
     }
